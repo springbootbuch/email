@@ -6,8 +6,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.subethamail.smtp.server.SMTPServer;
 
 /**
  * Part of springbootbuch.de.
@@ -19,7 +21,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 public class Application implements CommandLineRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
+		((SMTPServer)ctx.getBean("smtpServer")).stop();		
 	}
 
 	private final JavaMailSender mailSender;
@@ -46,6 +49,6 @@ public class Application implements CommandLineRunner {
 				+ "</html>"
 			);
 		});
-		LATCH.await();
+		LATCH.await();		
 	}
 }

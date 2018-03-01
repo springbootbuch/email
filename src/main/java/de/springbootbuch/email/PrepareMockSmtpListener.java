@@ -53,10 +53,18 @@ public class PrepareMockSmtpListener implements SpringApplicationRunListener {
 	public void contextLoaded(ConfigurableApplicationContext context) {
 		context.getBeanFactory().registerSingleton("smtpServer", this.smtpServer);				
 	}
+	
+	@Override
+	public void started(ConfigurableApplicationContext context) {	
+	}
 
 	@Override
-	public void finished(ConfigurableApplicationContext context, Throwable exception) {	
-	}	
+	public void running(ConfigurableApplicationContext context) {
+	}
+
+	@Override
+	public void failed(ConfigurableApplicationContext context, Throwable exception) {		
+	}
 }
 
 class MessageHandlerImpl implements MessageHandlerFactory {
